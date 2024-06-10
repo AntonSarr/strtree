@@ -1,0 +1,22 @@
+[project]
+name = "strtree"
+version = "0.1.0"
+authors = [
+  { name="Anton Saroka", email="anton.soroka.1313@gmail.com" },
+]
+description = "Python package for strings binary classification, based on trees and regular expressions"
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/AntonSarr/strtree"
+Issues = "https://github.com/AntonSarr/strtree/issues"
+
+[tool.pytest.ini_options]
+pythonpath = [".", "src", "src/strtree"]
