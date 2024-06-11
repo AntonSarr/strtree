@@ -4,7 +4,7 @@ version = "0.1.0"
 authors = [
   { name="Anton Saroka", email="anton.soroka.1313@gmail.com" },
 ]
-description = "Python package for strings binary classification, based on trees and regular expressions"
+description = "Python package for strings binary classification, based on regular expressions put in a decision tree."
 readme = "README.md"
 requires-python = ">=3.8"
 classifiers = [
