@@ -2,7 +2,10 @@
 
 **strtree** is a Python package for strings binary classification, based on regular expressions put in a decision tree.
 
+Github repo: [stretree](https://github.com/AntonSarr/strtree)
+
 With strtree you can:
+
 - Do a binary classification of your strings using automatically extracted regular expressions
 - Find shortest regular expressions which covers strings with positive labels in the most accurate way
 
@@ -49,7 +52,7 @@ matches = tree.match(other_strings)
 2. Use PyPI:
 `pip install strtree`
 1. Use a distribution file located in the `dist` folder: 
-`pip install file.whl`
+`pip install strtree-0.1.0-py3-none-any.whl`
 
 # Contribution
 

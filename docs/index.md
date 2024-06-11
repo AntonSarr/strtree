@@ -2,7 +2,10 @@
 
 **strtree** is a Python package for strings binary classification, based on regular expressions put in a decision tree.
 
+Github repo: [stretree](https://github.com/AntonSarr/strtree)
+
 With strtree you can:
+
 - Do a binary classification of your strings using automatically extracted regular expressions
 - Find shortest regular expressions which covers strings with positive labels in the most accurate way
 
