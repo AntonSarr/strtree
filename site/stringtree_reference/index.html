@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>StringTree - Anomeda Python Package</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+        <link href="../assets/_mkdocstrings.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">Anomeda Python Package</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">Overview</a>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">API Reference <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="./" class="dropdown-item active">StringTree</a>
+</li>
+                                    
+<li>
+    <a href="../patternnode_reference/" class="dropdown-item">PatternNode</a>
+</li>
+                                    
+<li>
+    <a href="../pattern_reference/" class="dropdown-item">Pattern</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href=".." class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../patternnode_reference/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#utils.StringTree" class="nav-link">StringTree</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#utils.StringTree.build" class="nav-link">build</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#utils.StringTree.filter" class="nav-link">filter</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#utils.StringTree.get_leaves" class="nav-link">get_leaves</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#utils.StringTree.match" class="nav-link">match</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#utils.StringTree.precision_score" class="nav-link">precision_score</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#utils.StringTree.recall_score" class="nav-link">recall_score</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#utils.StringTree.set_leaves" class="nav-link">set_leaves</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<div class="doc doc-object doc-class">
+
+
+
+<h1 id="utils.StringTree" class="doc doc-heading">
+          <span class="doc doc-object-name doc-class-name">StringTree</span>
+
+
+</h1>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">StringTree</span><span class="p">()</span>
+</code></pre></div>
+
+  <div class="doc doc-contents first">
+
+  
+      <p>A class for binary classification of strings with regular expressions. </p>
+<p>Each node is an instance of the PatternNode class. It contains a regular expression and metadata. </p>
+
+
+
+  <p>Attributes:</p>
+  <ul>
+      <li class="field-body">
+        <b><code><span title="utils.StringTree.root">root</span></code></b>
+            (<code><a class="autorefs autorefs-internal" title="utils.PatternNode" href="../patternnode_reference/#utils.PatternNode">PatternNode</a></code>)
+        –
+        <div class="doc-md-description">
+          <p>The root PatternNode.</p>
+        </div>
+      </li>
+      <li class="field-body">
+        <b><code><span title="utils.StringTree.leaves">leaves</span></code></b>
+            (<code>list[<a class="autorefs autorefs-internal" title="utils.PatternNode" href="../patternnode_reference/#utils.PatternNode">PatternNode</a>]</code>)
+        –
+        <div class="doc-md-description">
+          <p>List of all nodes.</p>
+        </div>
+      </li>
+  </ul>
+  
+      <p>Initialize a StringTree object.</p>
+
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="utils.StringTree.build" class="doc doc-heading">
+          <span class="doc doc-object-name doc-function-name">build</span>
+
+
+</h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">build</span><span class="p">(</span>
+    <span class="n">strings</span><span class="p">,</span>
+    <span class="n">labels</span><span class="p">,</span>
+    <span class="n">min_precision</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">min_token_length</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">max_patterns</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">min_matches_leaf</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">min_strings_leaf</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+
+  <div class="doc doc-contents ">
+  
+      <p>Build a StringTree.</p>
+<p>For the StringTree object being used, create nodes and corresponding patterns. Use provided strings and labels.</p>
+
+
+
+  <p>Parameters:</p>
+  <ul>
+      <li class="field-body">
+        <b><code>strings</code></b>
+            (<code>list[str]</code>)
+        –
+        <div class="doc-md-description">
+          <p>List of strings.</p>
+        </div>
+      </li>
+      <li class="field-body">
+        <b><code>labels</code></b>
+            (<code>list[int]</code>)
+        –
+        <div class="doc-md-description">
+          <p>List of labels (0 or 1).</p>
+        </div>
+      </li>
+      <li class="field-body">
+        <b><code>min_precision</code></b>
+            (<code>float</code>, default:
+                <code>0.5</code>
+)
+        –
+        <div class="doc-md-description">
+          <p>The minimal precision of a pattern in the tree.</p>
+        </div>
+      </li>
+      <li class="field-body">
+        <b><code>min_token_length</code></b>
+            (<code>int</code>, default:
+                <code>1</code>
+)
+        –
+        <div class="doc-md-description">
+          <p>The initial length of the pattern.</p>
+        </div>
+      </li>
+      <li class="field-body">
+        <b><code>max_patterns</code></b>
+            (<code>int</code>, default:
+                <code>None</code>
+)
+        –
+        <div class="doc-md-description">
+          <p>The highest amount of patterns. Once the method finds more, it stops.</p>
+        </div>
+      </li>
+      <li class="field-body">
+        <b><code>min_matches_leaf</code></b>
+            (<code>int</code>, default:
+                <code>1</code>
+)
+        –
+        <div class="doc-md-description">
+          <p>The minimal amount of matches in one node.</p>
+        </div>
+      </li>
+      <li class="field-body">
+        <b><code>min_strings_leaf</code></b>
+            (<code>int</code>, default:
+                <code>1</code>
+)
+        –
+        <div class="doc-md-description">
+          <p>The minimal amount of strings in one node.</p>
+        </div>
+      </li>
+      <li class="field-body">
+        <b><code>verbose</code></b>
+            (<code>bool</code>, default:
+                <code>False</code>
+)
+        –
+        <div class="doc-md-description">
+          <p>If to provide additinal text output.</p>
+        </div>
+      </li>
+  </ul>
+
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="utils.StringTree.filter" class="doc doc-heading">
+          <span class="doc doc-object-name doc-function-name">filter</span>
+
+
+</h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nb">filter</span><span class="p">(</span><span class="n">strings</span><span class="p">,</span> <span class="n">return_nodes</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</code></pre></div>
+
+  <div class="doc doc-contents ">
+  
+      <p>Return strings matching the tree and corresponding nodes.</p>
+<p>A string matches a tree if it matches at least one node.</p>
+
+
+
+  <p>Parameters:</p>
+  <ul>
+      <li class="field-body">
+        <b><code>strings</code></b>
+            (<code>list[str]</code>)
+        –
+        <div class="doc-md-description">
+          <p>List of strings.</p>
+        </div>
+      </li>
+      <li class="field-body">
+        <b><code>return_nodes</code></b>
+            (<code>bool</code>, default:
+                <code>False</code>
+)
+        –
+        <div class="doc-md-description">
+          <p>Flag indicating if to return nodes corresponding to the matched strings. 
+If False, only matched strings are returned.</p>
+        </div>
+      </li>
+  </ul>
+
+
+
+  <p>Returns:</p>
+  <ul>
+      <li class="field-body">
+<b><code>matches</code></b> (            <code>list[int]</code>
+)        –
+        <div class="doc-md-description">
+          <p>List containing matching strings.</p>
+      </div>
+      </li>
+      <li class="field-body">
+<b><code>matched_nodes</code></b> (            <code>list[<a class="autorefs autorefs-internal" title="utils.PatternNode" href="../patternnode_reference/#utils.PatternNode">PatternNode</a>]</code>
+)        –
+        <div class="doc-md-description">
+          <p>List consisting of PatternNodes of matching strings. Returned only if return_nodes is True.</p>
+      </div>
+      </li>
+  </ul>
+
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="utils.StringTree.get_leaves" class="doc doc-heading">
+          <span class="doc doc-object-name doc-function-name">get_leaves</span>
+
+
+</h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">get_leaves</span><span class="p">()</span>
+</code></pre></div>
+
+  <div class="doc doc-contents ">
+  
+      <p>Get leaves attribute.</p>
+
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="utils.StringTree.match" class="doc doc-heading">
+          <span class="doc doc-object-name doc-function-name">match</span>
+
+
+</h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="k">match</span><span class="p">(</span><span class="n">strings</span><span class="p">,</span> <span class="n">return_nodes</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</code></pre></div>
+
+  <div class="doc doc-contents ">
+  
+      <p>Return flags indicating if strings match the tree.</p>
+<p>A string matches a tree if it matches at least one node.</p>
+
+
+
+  <p>Parameters:</p>
+  <ul>
+      <li class="field-body">
+        <b><code>strings</code></b>
+            (<code>list[str]</code>)
+        –
+        <div class="doc-md-description">
+          <p>List of strings.</p>
+        </div>
+      </li>
+      <li class="field-body">
+        <b><code>return_nodes</code></b>
+            (<code>bool</code>, default:
+                <code>False</code>
+)
+        –
+        <div class="doc-md-description">
+          <p>Flag indicating if to return nodes corresponding to the matched strings. 
+If False, only matched strings are returned.</p>
+        </div>
+      </li>
+  </ul>
+
+
+
+  <p>Returns:</p>
+  <ul>
+      <li class="field-body">
+<b><code>matches</code></b> (            <code>list[int]</code>
+)        –
+        <div class="doc-md-description">
+          <p>List containing 1 (match) and 0 (no match) for each string.</p>
+      </div>
+      </li>
+      <li class="field-body">
+<b><code>matched_nodes</code></b> (            <code>list[<a class="autorefs autorefs-internal" title="utils.PatternNode" href="../patternnode_reference/#utils.PatternNode">PatternNode</a>]</code>
+)        –
+        <div class="doc-md-description">
+          <p>List consisting of PatternNodes of matching strings. Returned only if return_nodes is True.</p>
+      </div>
+      </li>
+  </ul>
+
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="utils.StringTree.precision_score" class="doc doc-heading">
+          <span class="doc doc-object-name doc-function-name">precision_score</span>
+
+
+</h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">precision_score</span><span class="p">(</span><span class="n">strings</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+</code></pre></div>
+
+  <div class="doc doc-contents ">
+  
+      <p>Calculate a precision score for given strings and labels.</p>
+
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="utils.StringTree.recall_score" class="doc doc-heading">
+          <span class="doc doc-object-name doc-function-name">recall_score</span>
+
+
+</h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">recall_score</span><span class="p">(</span><span class="n">strings</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+</code></pre></div>
+
+  <div class="doc doc-contents ">
+  
+      <p>Calculate a recall score for given strings and labels.</p>
+
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="utils.StringTree.set_leaves" class="doc doc-heading">
+          <span class="doc doc-object-name doc-function-name">set_leaves</span>
+
+
+</h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">set_leaves</span><span class="p">(</span><span class="n">leaves</span><span class="p">)</span>
+</code></pre></div>
+
+  <div class="doc doc-contents ">
+  
+      <p>Set leaves attribute.</p>
+
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+
+</div></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/jquery-3.6.0.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

@@ -1,0 +1,24 @@
+site_name: Anomeda Python Package
+
+nav:
+  - Overview: index.md
+  - API Reference: 
+    - StringTree: stringtree_reference.md
+    - PatternNode: patternnode_reference.md
+    - Pattern: pattern_reference.md
+  
+plugins:
+  - search
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          paths: ["src/strtree", "src"]
+          options:
+            docstring_section_style: list
+            docstring_style: numpy
+            show_signature_annotations: true
+            show_source: false
+            filters:
+            - "!^_"
+            - "!^__"

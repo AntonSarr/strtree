@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Pattern - Anomeda Python Package</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+        <link href="../assets/_mkdocstrings.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">Anomeda Python Package</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">Overview</a>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">API Reference <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../stringtree_reference/" class="dropdown-item">StringTree</a>
+</li>
+                                    
+<li>
+    <a href="../patternnode_reference/" class="dropdown-item">PatternNode</a>
+</li>
+                                    
+<li>
+    <a href="./" class="dropdown-item active">Pattern</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../patternnode_reference/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" class="nav-link disabled">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#utils.Pattern" class="nav-link">Pattern</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#utils.Pattern.filter" class="nav-link">filter</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#utils.Pattern.match" class="nav-link">match</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#utils.Pattern.scores" class="nav-link">scores</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<div class="doc doc-object doc-class">
+
+
+
+<h1 id="utils.Pattern" class="doc doc-heading">
+          <span class="doc doc-object-name doc-class-name">Pattern</span>
+
+
+</h1>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">Pattern</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span>
+</code></pre></div>
+
+  <div class="doc doc-contents first">
+
+  
+      <p>Class for representing a pattern (a regular expression).</p>
+  
+      <p>Initialize a Pattern.</p>
+
+
+
+  <p>Parameters:</p>
+  <ul>
+      <li class="field-body">
+        <b><code>pattern</code></b>
+            (<code><span title="utils.Pattern.str">str</span> | <a class="autorefs autorefs-internal" title="utils.Pattern" href="#utils.Pattern">Pattern</a></code>)
+        –
+        <div class="doc-md-description">
+          <p>Str or Pattern object representing a regular expressions. It must be compatible with re.compile method.</p>
+        </div>
+      </li>
+  </ul>
+
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="utils.Pattern.filter" class="doc doc-heading">
+          <span class="doc doc-object-name doc-function-name">filter</span>
+
+
+</h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nb">filter</span><span class="p">(</span><span class="n">strings</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</code></pre></div>
+
+  <div class="doc doc-contents ">
+  
+      <p>Return strings and labels which match the pattern and which don't.</p>
+
+
+
+  <p>Parameters:</p>
+  <ul>
+      <li class="field-body">
+        <b><code>strings</code></b>
+            (<code>list[<span title="utils.Pattern.str">str</span>]</code>)
+        –
+        <div class="doc-md-description">
+          <p>Strings to filter.</p>
+        </div>
+      </li>
+      <li class="field-body">
+        <b><code>labels</code></b>
+            (<code>list[int]</code>, default:
+                <code>None</code>
+)
+        –
+        <div class="doc-md-description">
+          <p>Labels of strings.</p>
+        </div>
+      </li>
+  </ul>
+
+
+
+  <p>Returns:</p>
+  <ul>
+      <li class="field-body">
+            <code>matched_strings</code>
+        –
+        <div class="doc-md-description">
+          <p>Strings which match the pattern.</p>
+      </div>
+      </li>
+      <li class="field-body">
+            <code>labels_of_matched</code>
+        –
+        <div class="doc-md-description">
+          <p>Labels of strings which match the pattern. If no labels provided, an empty list.</p>
+      </div>
+      </li>
+      <li class="field-body">
+            <code>not_matched_strings</code>
+        –
+        <div class="doc-md-description">
+          <p>Strings which don't match the pattern.</p>
+      </div>
+      </li>
+      <li class="field-body">
+            <code>labels_of_not_matched</code>
+        –
+        <div class="doc-md-description">
+          <p>Labels of strings which don't match the pattern. If no labels provided, an empty list.</p>
+      </div>
+      </li>
+  </ul>
+
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="utils.Pattern.match" class="doc doc-heading">
+          <span class="doc doc-object-name doc-function-name">match</span>
+
+
+</h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="k">match</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+</code></pre></div>
+
+  <div class="doc doc-contents ">
+  
+      <p>Verify if the pattern matches the string.</p>
+
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="utils.Pattern.scores" class="doc doc-heading">
+          <span class="doc doc-object-name doc-function-name">scores</span>
+
+
+</h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">scores</span><span class="p">(</span><span class="n">strings</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+</code></pre></div>
+
+  <div class="doc doc-contents ">
+  
+      <p>Calculate classification quality scores for pattern's matches and the labels.</p>
+<p>Pattern's matches are considered as "predictions" when calculating quality metrics.</p>
+
+
+
+  <p>Parameters:</p>
+  <ul>
+      <li class="field-body">
+        <b><code>strings</code></b>
+            (<code>list[<span title="utils.Pattern.str">str</span>]</code>)
+        –
+        <div class="doc-md-description">
+          <p>A list of strings.</p>
+        </div>
+      </li>
+      <li class="field-body">
+        <b><code>labels</code></b>
+            (<code>list[int]</code>)
+        –
+        <div class="doc-md-description">
+          <p>A list of strings labels consisting of 0 and 1.</p>
+        </div>
+      </li>
+  </ul>
+
+
+
+  <p>Returns:</p>
+  <ul>
+      <li class="field-body">
+<b><code>response</code></b> (            <code>dict</code>
+)        –
+        <div class="doc-md-description">
+          <p>Contains keys: 'n_strings', 'total_positive', 'n_matches', 'precision', 'recall' and 'accuracy'.</p>
+      </div>
+      </li>
+  </ul>
+
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+
+</div></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/jquery-3.6.0.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
