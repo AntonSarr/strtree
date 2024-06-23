@@ -455,12 +455,15 @@ class StringTree:
                 print(f'Current pattern="{cur_pattern}". N matches: {n_matches}, Precision={precision}, Recall={recall}')
 
             first_run = True
+            pattern_was_not_found = False
+            stop_processing = True
 
             local_cur_strings, local_cur_labels = cur_strings, cur_labels
             while (precision < min_precision
-                  and sum(local_cur_labels) > 0 
-                  and n_matches > min_matches_leaf
-                  and len(local_cur_strings) > min_strings_leaf):
+                      and sum(local_cur_labels) > 0 
+                      and n_matches > min_matches_leaf
+                      and len(local_cur_strings) > min_strings_leaf):
+                stop_processing = False
                 if first_run:
                     token_size = min_token_length
                 else:
@@ -469,20 +472,45 @@ class StringTree:
                 tokens = list(ngrams.keys())
 
                 best_pattern = StringTree._augment_pattern(local_cur_strings, local_cur_labels, cur_pattern, tokens)
-                cur_pattern = best_pattern
-                scores = cur_pattern.scores(local_cur_strings, local_cur_labels)
+                if best_pattern == cur_pattern:
+                    pattern_was_not_found = True
+                    if verbose:
+                        print(f'Pattern was not found. Current pattern="{cur_pattern}". Precision={precision}, Recall={recall}')
+                    break
+                scores = best_pattern.scores(local_cur_strings, local_cur_labels)
 
                 precision = scores['precision']
                 recall = scores['recall']
                 n_matches = scores['n_matches']
+                
                 if verbose:
-                    print(f'Current pattern="{cur_pattern}". N matches: {n_matches}, Precision={precision}, Recall={recall}')
+                    print(f'Best pattern="{best_pattern}". N matches: {n_matches}, Precision={precision}, Recall={recall}')
+
+                if n_matches < min_matches_leaf:
+                    stop_processing = True
+                    if cur_pattern.str == '':
+                        cur_pattern = best_pattern
+                    break
+                if len(local_cur_strings) < min_strings_leaf:
+                    stop_processing = True
+                    if cur_pattern.str == '':
+                        cur_pattern = best_pattern
+                    break
+                    
+                cur_pattern = best_pattern
                 
                 local_cur_strings, local_cur_labels, _, _ = \
                 cur_pattern.filter(local_cur_strings, local_cur_labels)
-
+                
                 first_run = False
-
+                
+            if pattern_was_not_found:
+                cur_strings, cur_labels, not_matched_strings, labels_of_not_matched = \
+                    cur_pattern.filter(cur_strings, cur_labels)
+                if sum(labels_of_not_matched) > 0:
+                    evaluation_queue.append((not_matched_strings, labels_of_not_matched))
+                continue
+            
             cur_node = PatternNode(cur_pattern)
             cur_node.scores = scores
             cur_node.strings = cur_strings
@@ -496,6 +524,13 @@ class StringTree:
             if sum(labels_of_not_matched) > 0:
                 evaluation_queue.append((not_matched_strings, labels_of_not_matched))
                 
+            if n_matches <= min_matches_leaf and stop_processing:
+                print(f'Best pattern has {n_matches} matches which is less or equal to min_matches_leaf. Processing stopped.')
+                continue
+            if len(local_cur_strings) <= min_strings_leaf and stop_processing:
+                print(f'Best pattern has {len(local_cur_strings)} strings which is less or equal to min_strings_leaf. Processing stopped.')
+                continue
+                
             if sum(cur_labels) > 0:
                 leaves.append(cur_node)
                 if verbose:
@@ -507,7 +542,7 @@ class StringTree:
                 prev_node.left = cur_node
             prev_node = cur_node
 
-            if len(leaves) > max_patterns:
+            if len(leaves) >= max_patterns:
                 if verbose:
                     print(f'Max patterns number of {max_patterns} is reached')
                 break
