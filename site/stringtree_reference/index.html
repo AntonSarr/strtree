@@ -89,31 +89,31 @@
             
             <li class="nav-item" data-level="1"><a href="#utils.StringTree" class="nav-link">StringTree</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#utils.StringTree.build" class="nav-link">build</a>
+            <li class="nav-item" data-level="2"><a href="#utils.StringTree.build" class="nav-link">build()</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#utils.StringTree.filter" class="nav-link">filter</a>
+            <li class="nav-item" data-level="2"><a href="#utils.StringTree.filter" class="nav-link">filter()</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#utils.StringTree.get_leaves" class="nav-link">get_leaves</a>
+            <li class="nav-item" data-level="2"><a href="#utils.StringTree.get_leaves" class="nav-link">get_leaves()</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#utils.StringTree.match" class="nav-link">match</a>
+            <li class="nav-item" data-level="2"><a href="#utils.StringTree.match" class="nav-link">match()</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#utils.StringTree.precision_score" class="nav-link">precision_score</a>
+            <li class="nav-item" data-level="2"><a href="#utils.StringTree.precision_score" class="nav-link">precision_score()</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#utils.StringTree.recall_score" class="nav-link">recall_score</a>
+            <li class="nav-item" data-level="2"><a href="#utils.StringTree.recall_score" class="nav-link">recall_score()</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#utils.StringTree.set_leaves" class="nav-link">set_leaves</a>
+            <li class="nav-item" data-level="2"><a href="#utils.StringTree.set_leaves" class="nav-link">set_leaves()</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -128,12 +128,12 @@
 
 
 
-<h1 id="utils.StringTree" class="doc doc-heading">
-          <span class="doc doc-object-name doc-class-name">StringTree</span>
+<h1 class="doc doc-heading" id="utils.StringTree">
+        <span class="doc doc-object-name doc-class-name">StringTree</span>
 
 
 </h1>
-<div class="doc-signature highlight"><pre><span></span><code><span class="n">StringTree</span><span class="p">()</span>
+<div class="highlight"><pre><span></span><code><span class="n">StringTree</span><span class="p">()</span>
 </code></pre></div>
 
   <div class="doc doc-contents first">
@@ -142,12 +142,10 @@
       <p>A class for binary classification of strings with regular expressions. </p>
 <p>Each node is an instance of the PatternNode class. It contains a regular expression and metadata. </p>
 
-
-
   <p>Attributes:</p>
   <ul>
       <li class="field-body">
-        <b><code><span title="utils.StringTree.root">root</span></code></b>
+        <b>root</b>
             (<code><a class="autorefs autorefs-internal" title="utils.PatternNode" href="../patternnode_reference/#utils.PatternNode">PatternNode</a></code>)
         –
         <div class="doc-md-description">
@@ -155,7 +153,7 @@
         </div>
       </li>
       <li class="field-body">
-        <b><code><span title="utils.StringTree.leaves">leaves</span></code></b>
+        <b>leaves</b>
             (<code>list[<a class="autorefs autorefs-internal" title="utils.PatternNode" href="../patternnode_reference/#utils.PatternNode">PatternNode</a>]</code>)
         –
         <div class="doc-md-description">
@@ -163,6 +161,7 @@
         </div>
       </li>
   </ul>
+
   
       <p>Initialize a StringTree object.</p>
 
@@ -179,26 +178,16 @@
 
 
 
-
 <div class="doc doc-object doc-function">
 
 
 
-<h2 id="utils.StringTree.build" class="doc doc-heading">
-          <span class="doc doc-object-name doc-function-name">build</span>
+<h2 class="doc doc-heading" id="utils.StringTree.build">
+        <span class="doc doc-object-name doc-function-name">build</span>
 
 
 </h2>
-<div class="doc-signature highlight"><pre><span></span><code><span class="n">build</span><span class="p">(</span>
-    <span class="n">strings</span><span class="p">,</span>
-    <span class="n">labels</span><span class="p">,</span>
-    <span class="n">min_precision</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
-    <span class="n">min_token_length</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-    <span class="n">max_patterns</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">min_matches_leaf</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-    <span class="n">min_strings_leaf</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-    <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-<span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="n">build</span><span class="p">(</span><span class="n">strings</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">min_precision</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">min_token_length</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">max_patterns</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">min_matches_leaf</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">min_strings_leaf</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
 </code></pre></div>
 
   <div class="doc doc-contents ">
@@ -206,12 +195,10 @@
       <p>Build a StringTree.</p>
 <p>For the StringTree object being used, create nodes and corresponding patterns. Use provided strings and labels.</p>
 
-
-
   <p>Parameters:</p>
   <ul>
       <li class="field-body">
-        <b><code>strings</code></b>
+        <b>strings</b>
             (<code>list[str]</code>)
         –
         <div class="doc-md-description">
@@ -219,7 +206,7 @@
         </div>
       </li>
       <li class="field-body">
-        <b><code>labels</code></b>
+        <b>labels</b>
             (<code>list[int]</code>)
         –
         <div class="doc-md-description">
@@ -227,60 +214,48 @@
         </div>
       </li>
       <li class="field-body">
-        <b><code>min_precision</code></b>
-            (<code>float</code>, default:
-                <code>0.5</code>
-)
+        <b>min_precision</b>
+            (<code>float</code>)
         –
         <div class="doc-md-description">
           <p>The minimal precision of a pattern in the tree.</p>
         </div>
       </li>
       <li class="field-body">
-        <b><code>min_token_length</code></b>
-            (<code>int</code>, default:
-                <code>1</code>
-)
+        <b>min_token_length</b>
+            (<code>int</code>)
         –
         <div class="doc-md-description">
           <p>The initial length of the pattern.</p>
         </div>
       </li>
       <li class="field-body">
-        <b><code>max_patterns</code></b>
-            (<code>int</code>, default:
-                <code>None</code>
-)
+        <b>max_patterns</b>
+            (<code>int</code>)
         –
         <div class="doc-md-description">
           <p>The highest amount of patterns. Once the method finds more, it stops.</p>
         </div>
       </li>
       <li class="field-body">
-        <b><code>min_matches_leaf</code></b>
-            (<code>int</code>, default:
-                <code>1</code>
-)
+        <b>min_matches_leaf</b>
+            (<code>int</code>)
         –
         <div class="doc-md-description">
           <p>The minimal amount of matches in one node.</p>
         </div>
       </li>
       <li class="field-body">
-        <b><code>min_strings_leaf</code></b>
-            (<code>int</code>, default:
-                <code>1</code>
-)
+        <b>min_strings_leaf</b>
+            (<code>int</code>)
         –
         <div class="doc-md-description">
           <p>The minimal amount of strings in one node.</p>
         </div>
       </li>
       <li class="field-body">
-        <b><code>verbose</code></b>
-            (<code>bool</code>, default:
-                <code>False</code>
-)
+        <b>verbose</b>
+            (<code>bool</code>)
         –
         <div class="doc-md-description">
           <p>If to provide additinal text output.</p>
@@ -292,17 +267,16 @@
 
 </div>
 
-
 <div class="doc doc-object doc-function">
 
 
 
-<h2 id="utils.StringTree.filter" class="doc doc-heading">
-          <span class="doc doc-object-name doc-function-name">filter</span>
+<h2 class="doc doc-heading" id="utils.StringTree.filter">
+        <span class="doc doc-object-name doc-function-name">filter</span>
 
 
 </h2>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nb">filter</span><span class="p">(</span><span class="n">strings</span><span class="p">,</span> <span class="n">return_nodes</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="nb">filter</span><span class="p">(</span><span class="n">strings</span><span class="p">,</span> <span class="n">return_nodes</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
 </code></pre></div>
 
   <div class="doc doc-contents ">
@@ -310,12 +284,10 @@
       <p>Return strings matching the tree and corresponding nodes.</p>
 <p>A string matches a tree if it matches at least one node.</p>
 
-
-
   <p>Parameters:</p>
   <ul>
       <li class="field-body">
-        <b><code>strings</code></b>
+        <b>strings</b>
             (<code>list[str]</code>)
         –
         <div class="doc-md-description">
@@ -323,10 +295,8 @@
         </div>
       </li>
       <li class="field-body">
-        <b><code>return_nodes</code></b>
-            (<code>bool</code>, default:
-                <code>False</code>
-)
+        <b>return_nodes</b>
+            (<code>bool</code>)
         –
         <div class="doc-md-description">
           <p>Flag indicating if to return nodes corresponding to the matched strings. 
@@ -335,19 +305,17 @@ If False, only matched strings are returned.</p>
       </li>
   </ul>
 
-
-
   <p>Returns:</p>
   <ul>
       <li class="field-body">
-<b><code>matches</code></b> (            <code>list[int]</code>
+<b>matches</b>(            <code>list[int]</code>
 )        –
         <div class="doc-md-description">
           <p>List containing matching strings.</p>
       </div>
       </li>
       <li class="field-body">
-<b><code>matched_nodes</code></b> (            <code>list[<a class="autorefs autorefs-internal" title="utils.PatternNode" href="../patternnode_reference/#utils.PatternNode">PatternNode</a>]</code>
+<b>matched_nodes</b>(            <code>list[<a class="autorefs autorefs-internal" title="utils.PatternNode" href="../patternnode_reference/#utils.PatternNode">PatternNode</a>]</code>
 )        –
         <div class="doc-md-description">
           <p>List consisting of PatternNodes of matching strings. Returned only if return_nodes is True.</p>
@@ -359,17 +327,16 @@ If False, only matched strings are returned.</p>
 
 </div>
 
-
 <div class="doc doc-object doc-function">
 
 
 
-<h2 id="utils.StringTree.get_leaves" class="doc doc-heading">
-          <span class="doc doc-object-name doc-function-name">get_leaves</span>
+<h2 class="doc doc-heading" id="utils.StringTree.get_leaves">
+        <span class="doc doc-object-name doc-function-name">get_leaves</span>
 
 
 </h2>
-<div class="doc-signature highlight"><pre><span></span><code><span class="n">get_leaves</span><span class="p">()</span>
+<div class="highlight"><pre><span></span><code><span class="n">get_leaves</span><span class="p">()</span>
 </code></pre></div>
 
   <div class="doc doc-contents ">
@@ -380,17 +347,16 @@ If False, only matched strings are returned.</p>
 
 </div>
 
-
 <div class="doc doc-object doc-function">
 
 
 
-<h2 id="utils.StringTree.match" class="doc doc-heading">
-          <span class="doc doc-object-name doc-function-name">match</span>
+<h2 class="doc doc-heading" id="utils.StringTree.match">
+        <span class="doc doc-object-name doc-function-name">match</span>
 
 
 </h2>
-<div class="doc-signature highlight"><pre><span></span><code><span class="k">match</span><span class="p">(</span><span class="n">strings</span><span class="p">,</span> <span class="n">return_nodes</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="k">match</span><span class="p">(</span><span class="n">strings</span><span class="p">,</span> <span class="n">return_nodes</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
 </code></pre></div>
 
   <div class="doc doc-contents ">
@@ -398,12 +364,10 @@ If False, only matched strings are returned.</p>
       <p>Return flags indicating if strings match the tree.</p>
 <p>A string matches a tree if it matches at least one node.</p>
 
-
-
   <p>Parameters:</p>
   <ul>
       <li class="field-body">
-        <b><code>strings</code></b>
+        <b>strings</b>
             (<code>list[str]</code>)
         –
         <div class="doc-md-description">
@@ -411,10 +375,8 @@ If False, only matched strings are returned.</p>
         </div>
       </li>
       <li class="field-body">
-        <b><code>return_nodes</code></b>
-            (<code>bool</code>, default:
-                <code>False</code>
-)
+        <b>return_nodes</b>
+            (<code>bool</code>)
         –
         <div class="doc-md-description">
           <p>Flag indicating if to return nodes corresponding to the matched strings. 
@@ -423,19 +385,17 @@ If False, only matched strings are returned.</p>
       </li>
   </ul>
 
-
-
   <p>Returns:</p>
   <ul>
       <li class="field-body">
-<b><code>matches</code></b> (            <code>list[int]</code>
+<b>matches</b>(            <code>list[int]</code>
 )        –
         <div class="doc-md-description">
           <p>List containing 1 (match) and 0 (no match) for each string.</p>
       </div>
       </li>
       <li class="field-body">
-<b><code>matched_nodes</code></b> (            <code>list[<a class="autorefs autorefs-internal" title="utils.PatternNode" href="../patternnode_reference/#utils.PatternNode">PatternNode</a>]</code>
+<b>matched_nodes</b>(            <code>list[<a class="autorefs autorefs-internal" title="utils.PatternNode" href="../patternnode_reference/#utils.PatternNode">PatternNode</a>]</code>
 )        –
         <div class="doc-md-description">
           <p>List consisting of PatternNodes of matching strings. Returned only if return_nodes is True.</p>
@@ -447,17 +407,16 @@ If False, only matched strings are returned.</p>
 
 </div>
 
-
 <div class="doc doc-object doc-function">
 
 
 
-<h2 id="utils.StringTree.precision_score" class="doc doc-heading">
-          <span class="doc doc-object-name doc-function-name">precision_score</span>
+<h2 class="doc doc-heading" id="utils.StringTree.precision_score">
+        <span class="doc doc-object-name doc-function-name">precision_score</span>
 
 
 </h2>
-<div class="doc-signature highlight"><pre><span></span><code><span class="n">precision_score</span><span class="p">(</span><span class="n">strings</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="n">precision_score</span><span class="p">(</span><span class="n">strings</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
 </code></pre></div>
 
   <div class="doc doc-contents ">
@@ -468,17 +427,16 @@ If False, only matched strings are returned.</p>
 
 </div>
 
-
 <div class="doc doc-object doc-function">
 
 
 
-<h2 id="utils.StringTree.recall_score" class="doc doc-heading">
-          <span class="doc doc-object-name doc-function-name">recall_score</span>
+<h2 class="doc doc-heading" id="utils.StringTree.recall_score">
+        <span class="doc doc-object-name doc-function-name">recall_score</span>
 
 
 </h2>
-<div class="doc-signature highlight"><pre><span></span><code><span class="n">recall_score</span><span class="p">(</span><span class="n">strings</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="n">recall_score</span><span class="p">(</span><span class="n">strings</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
 </code></pre></div>
 
   <div class="doc doc-contents ">
@@ -489,17 +447,16 @@ If False, only matched strings are returned.</p>
 
 </div>
 
-
 <div class="doc doc-object doc-function">
 
 
 
-<h2 id="utils.StringTree.set_leaves" class="doc doc-heading">
-          <span class="doc doc-object-name doc-function-name">set_leaves</span>
+<h2 class="doc doc-heading" id="utils.StringTree.set_leaves">
+        <span class="doc doc-object-name doc-function-name">set_leaves</span>
 
 
 </h2>
-<div class="doc-signature highlight"><pre><span></span><code><span class="n">set_leaves</span><span class="p">(</span><span class="n">leaves</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="n">set_leaves</span><span class="p">(</span><span class="n">leaves</span><span class="p">)</span>
 </code></pre></div>
 
   <div class="doc doc-contents ">
@@ -515,7 +472,6 @@ If False, only matched strings are returned.</p>
   </div>
 
   </div>
-
 
 </div></div>
             </div>
