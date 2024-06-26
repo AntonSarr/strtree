@@ -18,7 +18,7 @@ class Pattern:
             self.regex = re.compile(pattern)
         elif isinstance(pattern, Pattern):
             self.str = pattern.str
-            self.regex = pattern.compile
+            self.regex = pattern.regex
         else:
             raise ValueError(f'Unknown type {type(pattern)} for Pattern __init__ method')
             
@@ -48,14 +48,13 @@ class Pattern:
         response : dict
             Contains keys: 'n_strings', 'total_positive', 'n_matches', 'precision', 'recall' and 'accuracy'.
         """
-        regex = self.regex
         true_positive = 0
         true_negative = 0
         total_positive = sum(labels)
         n_strings = len(strings)
         n_matches = 0
         for i in range(n_strings):
-            match = regex.search(strings[i]) is not None
+            match = self.match(strings[i])
             if match:
                 n_matches += 1
                 if labels[i] == 1:
@@ -84,7 +83,7 @@ class Pattern:
         return response
 
     def match(self, string):
-        """Verify if the pattern matches the string."""
+        """Verify if the pattern matches the string (at any place)."""
         return self.regex.search(string) is not None
 
     def filter(self, strings, labels=None):
@@ -112,10 +111,9 @@ class Pattern:
         labels_of_matched = []
         not_matched_strings = []
         labels_of_not_matched = []
-        
-        regex = self.regex
+
         for string_i in range(len(strings)):
-            match = regex.search(strings[string_i]) is not None
+            match = self.match(strings[string_i])
             if match:
                 matched_strings.append(strings[string_i])
                 if labels is not None:
@@ -275,7 +273,8 @@ class StringTree:
         """Generate tokens of given length from given strings.
 
         Tokens are parts of strings of a given length. 
-        Tokens with "placeholders" like ".+", ".*", etc are also generated.
+        Tokens with placeholders ".+", ".*", "\d" are also generated.
+        Symb
         Tokens are not generated for strings with label = 0.
 
         Parameters
@@ -300,20 +299,33 @@ class StringTree:
             string = strings[string_i]
             for i in range(len(string) - n + 1):
                 token = string[i: i + n]
+                token = re.sub(r'(\\x|\\u|\t|\r|\n|\.|\+|\*|\?|\^|\$|\(|\)|\[|\]|\{|\}|\\|\|)', r'\\\1', token)
+
+                processed_token = token
+                
+                # If a beginning of a string, add ^
                 if i == 0:
-                    token = '^' + token
+                    processed_token = '^' + processed_token
+                # If a middle, add .+ at the beginning and at the end
                 elif i > 0:
-                    token = '.+' + token
+                    processed_token = '.+' + processed_token
                 if i < len(string) - n:
-                    token = token + '.+'
+                    processed_token = processed_token + '.+'
+                # If the end of a string, add $ at the end
                 elif i == len(string) - n:
-                    token = token + '$'
-                if token not in ngrams:
-                    ngrams[token] = {"count": 0}
-                ngrams[token]["count"] += 1
-    
+                    processed_token = processed_token + '$'
+                if processed_token not in ngrams:
+                    ngrams[processed_token] = {"count": 0}
+                ngrams[processed_token]["count"] += 1
+
+                # Replace digits with \d symbol
+                processed_token = re.sub(r'\d', r'\\d', processed_token)
+                if processed_token not in ngrams:
+                    ngrams[processed_token] = {"count": 0}
+                ngrams[processed_token]["count"] += 1
+
                 # You may add other tokens here,
-                # f.e. with tokens ".*", "\d", etc
+                # f.e. with tokens ".*", etc
         return ngrams  
 
     @staticmethod

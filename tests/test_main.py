@@ -5,6 +5,11 @@ def test_init_strtree():
     tree = strtree.StringTree()
 
 
+def test_init_pattern():
+    pattern = strtree.Pattern('ABC')
+    pattern = strtree.Pattern(pattern)
+
+
 def test_build_tree():
 
     strings = ['Samsung X-500', 'Samsung SM-10', 'Samsung X-1100', 'Samsung F-10', 'Samsung X-2200',
