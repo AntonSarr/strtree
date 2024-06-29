@@ -89,15 +89,15 @@
             
             <li class="nav-item" data-level="1"><a href="#utils.Pattern" class="nav-link">Pattern</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#utils.Pattern.filter" class="nav-link">filter()</a>
+            <li class="nav-item" data-level="2"><a href="#utils.Pattern.filter" class="nav-link">filter</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#utils.Pattern.match" class="nav-link">match()</a>
+            <li class="nav-item" data-level="2"><a href="#utils.Pattern.match" class="nav-link">match</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#utils.Pattern.scores" class="nav-link">scores()</a>
+            <li class="nav-item" data-level="2"><a href="#utils.Pattern.scores" class="nav-link">scores</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -112,26 +112,27 @@
 
 
 
-<h1 class="doc doc-heading" id="utils.Pattern">
-        <span class="doc doc-object-name doc-class-name">Pattern</span>
+<h1 id="utils.Pattern" class="doc doc-heading">
+          <span class="doc doc-object-name doc-class-name">Pattern</span>
 
 
 </h1>
-<div class="highlight"><pre><span></span><code><span class="n">Pattern</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">Pattern</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span>
 </code></pre></div>
 
   <div class="doc doc-contents first">
 
   
       <p>Class for representing a pattern (a regular expression).</p>
-
   
       <p>Initialize a Pattern.</p>
+
+
 
   <p>Parameters:</p>
   <ul>
       <li class="field-body">
-        <b>pattern</b>
+        <b><code>pattern</code></b>
             (<code><span title="utils.Pattern.str">str</span> | <a class="autorefs autorefs-internal" title="utils.Pattern" href="#utils.Pattern">Pattern</a></code>)
         –
         <div class="doc-md-description">
@@ -153,70 +154,46 @@
 
 
 
+
 <div class="doc doc-object doc-function">
 
 
 
-<h2 class="doc doc-heading" id="utils.Pattern.filter">
-        <span class="doc doc-object-name doc-function-name">filter</span>
+<h2 id="utils.Pattern.filter" class="doc doc-heading">
+          <span class="doc doc-object-name doc-function-name">filter</span>
 
 
 </h2>
-<div class="highlight"><pre><span></span><code><span class="nb">filter</span><span class="p">(</span><span class="n">strings</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nb">filter</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
 </code></pre></div>
 
   <div class="doc doc-contents ">
   
-      <p>Return strings and labels which match the pattern and which don't.</p>
+      <p>Return a boolean mask for strings matching the pattern.</p>
+
+
 
   <p>Parameters:</p>
   <ul>
       <li class="field-body">
-        <b>strings</b>
+        <b><code>strings</code></b>
             (<code>list[<span title="utils.Pattern.str">str</span>]</code>)
         –
         <div class="doc-md-description">
           <p>Strings to filter.</p>
         </div>
       </li>
-      <li class="field-body">
-        <b>labels</b>
-            (<code>list[int]</code>)
-        –
-        <div class="doc-md-description">
-          <p>Labels of strings.</p>
-        </div>
-      </li>
   </ul>
+
+
 
   <p>Returns:</p>
   <ul>
       <li class="field-body">
-            <code>matched_strings</code>
+            <code>matches</code>
         –
         <div class="doc-md-description">
-          <p>Strings which match the pattern.</p>
-      </div>
-      </li>
-      <li class="field-body">
-            <code>labels_of_matched</code>
-        –
-        <div class="doc-md-description">
-          <p>Labels of strings which match the pattern. If no labels provided, an empty list.</p>
-      </div>
-      </li>
-      <li class="field-body">
-            <code>not_matched_strings</code>
-        –
-        <div class="doc-md-description">
-          <p>Strings which don't match the pattern.</p>
-      </div>
-      </li>
-      <li class="field-body">
-            <code>labels_of_not_matched</code>
-        –
-        <div class="doc-md-description">
-          <p>Labels of strings which don't match the pattern. If no labels provided, an empty list.</p>
+          <p>Numpy array of bool type.</p>
       </div>
       </li>
   </ul>
@@ -225,16 +202,17 @@
 
 </div>
 
+
 <div class="doc doc-object doc-function">
 
 
 
-<h2 class="doc doc-heading" id="utils.Pattern.match">
-        <span class="doc doc-object-name doc-function-name">match</span>
+<h2 id="utils.Pattern.match" class="doc doc-heading">
+          <span class="doc doc-object-name doc-function-name">match</span>
 
 
 </h2>
-<div class="highlight"><pre><span></span><code><span class="k">match</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="k">match</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
 </code></pre></div>
 
   <div class="doc doc-contents ">
@@ -245,16 +223,17 @@
 
 </div>
 
+
 <div class="doc doc-object doc-function">
 
 
 
-<h2 class="doc doc-heading" id="utils.Pattern.scores">
-        <span class="doc doc-object-name doc-function-name">scores</span>
+<h2 id="utils.Pattern.scores" class="doc doc-heading">
+          <span class="doc doc-object-name doc-function-name">scores</span>
 
 
 </h2>
-<div class="highlight"><pre><span></span><code><span class="n">scores</span><span class="p">(</span><span class="n">strings</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">scores</span><span class="p">(</span><span class="n">strings</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">full_labels_list</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 
   <div class="doc doc-contents ">
@@ -262,10 +241,12 @@
       <p>Calculate classification quality scores for pattern's matches and the labels.</p>
 <p>Pattern's matches are considered as "predictions" when calculating quality metrics.</p>
 
+
+
   <p>Parameters:</p>
   <ul>
       <li class="field-body">
-        <b>strings</b>
+        <b><code>strings</code></b>
             (<code>list[<span title="utils.Pattern.str">str</span>]</code>)
         –
         <div class="doc-md-description">
@@ -273,22 +254,35 @@
         </div>
       </li>
       <li class="field-body">
-        <b>labels</b>
+        <b><code>labels</code></b>
             (<code>list[int]</code>)
         –
         <div class="doc-md-description">
-          <p>A list of strings labels consisting of 0 and 1.</p>
+          <p>A list of strings labels.</p>
+        </div>
+      </li>
+      <li class="field-body">
+        <b><code>full_labels_list</code></b>
+            (<code>list[int]</code>, default:
+                <code>None</code>
+)
+        –
+        <div class="doc-md-description">
+          <p>A full list of unique labels that can be present among labels.</p>
         </div>
       </li>
   </ul>
 
+
+
   <p>Returns:</p>
   <ul>
       <li class="field-body">
-<b>response</b>(            <code>dict</code>
+<b><code>response</code></b> (            <code>dict</code>
 )        –
         <div class="doc-md-description">
-          <p>Contains keys: 'n_strings', 'total_positive', 'n_matches', 'precision', 'recall' and 'accuracy'.</p>
+          <p>Contains keys: 'n_strings', 'total_positive', 'n_matches', 'precision', 'recall' and 'accuracy'.
+If there are more than 2 classes, each key is a list corresponding to each class.</p>
       </div>
       </li>
   </ul>
@@ -302,6 +296,7 @@
   </div>
 
   </div>
+
 
 </div></div>
             </div>

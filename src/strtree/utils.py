@@ -5,6 +5,7 @@ import numpy as np
 
 class Pattern:
     """Class for representing a pattern (a regular expression)."""
+    
     def __init__(self, pattern):
         """Initialize a Pattern.
 
@@ -31,9 +32,10 @@ class Pattern:
     def __copy__(self):
         return Pattern(self.str)
 
-    def scores(self, strings, labels):
+    def _binary_class_scores(self, strings, labels):
         """Calculate classification quality scores for pattern's matches and the labels.
 
+        Labels must be binary (must consist of 0 and 1 only).
         Pattern's matches are considered as "predictions" when calculating quality metrics.
         
         Parameters
@@ -41,33 +43,29 @@ class Pattern:
         strings : list[str]
             A list of strings.
         labels : list[int]
-            A list of strings labels consisting of 0 and 1.
+            A list of strings labels.
 
         Returns
         -------
         response : dict
-            Contains keys: 'n_strings', 'total_positive', 'n_matches', 'precision', 'recall' and 'accuracy'.
+            Contains keys: 'n_strings', 'total_positive', 'n_matches', 'precision', 'recall', 'accuracy'.
         """
         true_positive = 0
         true_negative = 0
         total_positive = sum(labels)
         n_strings = len(strings)
-        n_matches = 0
-        for i in range(n_strings):
-            match = self.match(strings[i])
-            if match:
-                n_matches += 1
-                if labels[i] == 1:
-                    true_positive += 1
-            else:
-                if labels[i] == 0:
-                    true_negative += 1
+
+        matches = np.array(list(map(self.match, strings)))
+        n_matches = np.sum(matches)
+        true_positive = np.sum(matches & labels)
+        true_negative = np.sum(~matches & (labels == 0))
+        
         if n_matches == 0:
             precision = 0.
             accuracy = 0.
         else:
             precision = true_positive / n_matches
-            accuracy = (true_positive + true_negative) / n_matches
+            accuracy = (true_positive + true_negative) / n_strings
         if total_positive == 0:
             recall = 0.
         else:
@@ -82,48 +80,73 @@ class Pattern:
         }
         return response
 
+    def scores(self, strings, labels, full_labels_list=None):
+        """Calculate classification quality scores for pattern's matches and the labels.
+
+        Pattern's matches are considered as "predictions" when calculating quality metrics.
+        
+        Parameters
+        ----------
+        strings : list[str]
+            A list of strings.
+        labels : list[int]
+            A list of strings labels.
+        full_labels_list : list[int]
+            A full list of unique labels that can be present among labels.
+
+        Returns
+        -------
+        response : dict
+            Contains keys: 'n_strings', 'total_positive', 'n_matches', 'precision', 'recall' and 'accuracy'.
+            If there are more than 2 classes, each key is a list corresponding to each class.
+        """
+        max_label = max(labels)
+        if max_label > 1:  # is multiclass
+            if full_labels_list is not None:
+                label_names = full_labels_list
+            else:
+                label_names = np.unique(labels)
+            scores = {
+                'n_strings': [],
+                'total_positive': [],
+                'n_matches': [],
+                'precision': [],
+                'recall': [],
+                'accuracy': []
+            }
+            for label_name in label_names:
+                one_vs_rest_labels = (np.array(labels) == label_name).astype('int32')
+                class_scores = self._binary_class_scores(strings, one_vs_rest_labels)
+                scores['n_strings'] = class_scores['n_strings']
+                scores['total_positive'].append(class_scores['total_positive'])
+                scores['n_matches'] = class_scores['n_matches']
+                scores['precision'].append(class_scores['precision'])
+                scores['recall'].append(class_scores['recall'])
+                scores['accuracy'].append(class_scores['accuracy'])
+            return scores
+        else:
+            return self._binary_class_scores(strings, labels)
+
     def match(self, string):
         """Verify if the pattern matches the string (at any place)."""
         return self.regex.search(string) is not None
 
-    def filter(self, strings, labels=None):
-        """Return strings and labels which match the pattern and which don't.
+    def filter(self, strings):
+        """Return a boolean mask for strings matching the pattern.
 
         Parameters
         ----------
         strings : list[str]
             Strings to filter.
-        labels : list[int], default None
-            Labels of strings.
 
         Returns
         -------
-        matched_strings
-            Strings which match the pattern.
-        labels_of_matched
-            Labels of strings which match the pattern. If no labels provided, an empty list.
-        not_matched_strings
-            Strings which don't match the pattern.
-        labels_of_not_matched
-            Labels of strings which don't match the pattern. If no labels provided, an empty list.
+        matches
+            Numpy array of bool type.
         """
-        matched_strings = []
-        labels_of_matched = []
-        not_matched_strings = []
-        labels_of_not_matched = []
-
-        for string_i in range(len(strings)):
-            match = self.match(strings[string_i])
-            if match:
-                matched_strings.append(strings[string_i])
-                if labels is not None:
-                    labels_of_matched.append(labels[string_i])
-            else:
-                not_matched_strings.append(strings[string_i])
-                if labels is not None:
-                    labels_of_not_matched.append(labels[string_i])
+        matches = np.array(list(map(self.match, strings)))
     
-        return matched_strings, labels_of_matched, not_matched_strings, labels_of_not_matched
+        return matches
 
 
 class PatternNode:
@@ -157,8 +180,8 @@ class PatternNode:
         self.right = None
         self.left = None
         self._pattern = pattern
-        self._matches = None
-        self._strings = None
+        self._matches = []
+        self._strings = []
         self._labels = None
         self._scores = None
     
@@ -174,6 +197,7 @@ class PatternNode:
             f'right={right_node}, ',
             f'left={left_node}, ',
             f'n_strings={len(self._strings)}, ',
+            f'n_matches={len(self._matches)}, ',
             f'precision={self._scores["precision"]}, '
             f'recall={self._scores["recall"]}'
             ')'
@@ -189,8 +213,6 @@ class PatternNode:
 
     def set_strings(self, strings):
         """Set PatternNode.strings attribute"""
-        if self._strings is not None:
-            raise ValueError("PatternNode.strings attribute is immutable once set")
         self._strings = strings.copy()
 
     def get_labels(self):
@@ -213,8 +235,6 @@ class PatternNode:
 
     def set_matches(self, matches):
         """Set PatternNode.matches attribute"""
-        if self._matches is not None:
-            raise ValueError("PatternNode.matches attribute is immutable once set")
         self._matches = matches.copy()
 
     def get_pattern(self):
@@ -293,8 +313,9 @@ class StringTree:
         """
         n = length
         ngrams = {}
+        multiclass = max(labels) > 1
         for string_i in range(len(strings)):
-            if labels[string_i] == 0:  # Don't add ngramgs for negative target.
+            if labels[string_i] == 0 and not multiclass:  # Don't add ngramgs for negative target if it is binary classification
                 continue
             string = strings[string_i]
             for i in range(len(string) - n + 1):
@@ -385,15 +406,24 @@ class StringTree:
         """
         candidates_scores = []
         pattern_candidates = []
+        multiclass = max(labels) > 1
         for token in tokens:
             token_patterns = StringTree._combine_patterns(current_pattern, Pattern(token))
             for pattern in token_patterns:
                 scores = pattern.scores(strings, labels)
-                precision, recall, n_match = scores['precision'], scores['recall'], scores['n_matches']
-                if precision + recall == 0:
-                    f1_score = 0
+                precision, recall = scores['precision'], scores['recall']
+                if multiclass:
+                    max_precision = np.max(precision)
+                    max_recall = np.max(recall)
+                    if max_precision + max_recall == 0:
+                        f1_score = 0
+                    else:
+                        f1_score =  2*max_precision*max_recall / (max_precision+max_recall) 
                 else:
-                    f1_score =  2*precision*recall / (precision+recall) 
+                    if precision + recall == 0:
+                        f1_score = 0
+                    else:
+                        f1_score =  2*precision*recall / (precision+recall) 
                 candidates_scores.append(f1_score)
                 pattern_candidates.append(pattern)
         if len(pattern_candidates) > 0:
@@ -435,6 +465,10 @@ class StringTree:
             raise ValueError('min_precision must not be < 0 or > 1')
         if max_patterns is None:
             max_patterns = np.inf
+
+        multiclass = max(labels) > 1
+        classes = np.unique(labels)
+        self._classes = classes
             
         cur_strings = strings.copy()
         cur_labels = labels.copy()
@@ -449,30 +483,38 @@ class StringTree:
 
         for (cur_strings, cur_labels) in evaluation_queue:
             if verbose:
-                print(f'\nStart processing another {len(cur_strings)} of strings with {sum(cur_labels)} positive labels.')
+                if not multiclass:
+                    print(f'\nStart processing another {len(cur_strings)} of strings with {sum(cur_labels)} positive labels.')
+                else:
+                    print(f'\nStart processing another {len(cur_strings)} of strings with {len(classes)} classes.')
             
             cur_pattern = Pattern('')
-            scores = cur_pattern.scores(cur_strings, cur_labels)
+            scores = cur_pattern.scores(cur_strings, cur_labels, full_labels_list=classes)
 
             cur_node = PatternNode(cur_pattern)
             cur_node.scores = scores
             cur_node.strings = cur_strings
             cur_node.labels = cur_labels
             cur_node.matches = cur_strings
-            
+
             precision = scores['precision']
             recall = scores['recall']
             n_matches = scores['n_matches']
             if verbose:
                 print(f'Current pattern="{cur_pattern}". N matches: {n_matches}, Precision={precision}, Recall={recall}')
 
+            if multiclass:
+                precision = np.max(scores['precision'])
+                recall = np.max(scores['recall'])
+                n_matches = np.sum(scores['n_matches'])
+
             first_run = True
             pattern_was_not_found = False
             stop_processing = True
 
             local_cur_strings, local_cur_labels = cur_strings, cur_labels
-            while (precision < min_precision
-                      and sum(local_cur_labels) > 0 
+            while cur_pattern.str == '' or (precision < min_precision
+                      and (sum(local_cur_labels) > 0 or multiclass)
                       and n_matches > min_matches_leaf
                       and len(local_cur_strings) > min_strings_leaf):
                 stop_processing = False
@@ -489,14 +531,18 @@ class StringTree:
                     if verbose:
                         print(f'Pattern was not found. Current pattern="{cur_pattern}". Precision={precision}, Recall={recall}')
                     break
-                scores = best_pattern.scores(local_cur_strings, local_cur_labels)
+                scores = best_pattern.scores(local_cur_strings, local_cur_labels, full_labels_list=classes)
 
                 precision = scores['precision']
                 recall = scores['recall']
                 n_matches = scores['n_matches']
-                
                 if verbose:
                     print(f'Best pattern="{best_pattern}". N matches: {n_matches}, Precision={precision}, Recall={recall}')
+
+                if multiclass:
+                    precision = np.max(scores['precision'])
+                    recall = np.max(scores['recall'])
+                    n_matches = np.sum(scores['n_matches'])
 
                 if n_matches < min_matches_leaf:
                     stop_processing = True
@@ -510,15 +556,20 @@ class StringTree:
                     break
                     
                 cur_pattern = best_pattern
-                
-                local_cur_strings, local_cur_labels, _, _ = \
-                cur_pattern.filter(local_cur_strings, local_cur_labels)
+
+                cur_pattern_matches = cur_pattern.filter(local_cur_strings)
+                local_cur_strings = (np.array(local_cur_strings)[cur_pattern_matches]).tolist()
+                local_cur_labels = (np.array(local_cur_labels)[cur_pattern_matches]).tolist()
                 
                 first_run = False
                 
             if pattern_was_not_found:
-                cur_strings, cur_labels, not_matched_strings, labels_of_not_matched = \
-                    cur_pattern.filter(cur_strings, cur_labels)
+                cur_pattern_matches = cur_pattern.filter(cur_strings)
+                not_matched_strings = (np.array(cur_strings)[~cur_pattern_matches]).tolist()
+                labels_of_not_matched = (np.array(cur_labels)[~cur_pattern_matches]).tolist()
+                cur_strings = (np.array(cur_strings)[cur_pattern_matches]).tolist()
+                cur_labels = (np.array(cur_labels)[cur_pattern_matches]).tolist()
+                
                 if sum(labels_of_not_matched) > 0:
                     evaluation_queue.append((not_matched_strings, labels_of_not_matched))
                 continue
@@ -528,8 +579,11 @@ class StringTree:
             cur_node.strings = cur_strings
             cur_node.labels = cur_labels
 
-            cur_strings, cur_labels, not_matched_strings, labels_of_not_matched = \
-            cur_pattern.filter(cur_strings, cur_labels)
+            cur_pattern_matches = cur_pattern.filter(cur_strings)
+            not_matched_strings = (np.array(cur_strings)[~cur_pattern_matches]).tolist()
+            labels_of_not_matched = (np.array(cur_labels)[~cur_pattern_matches]).tolist()
+            cur_strings = (np.array(cur_strings)[cur_pattern_matches]).tolist()
+            cur_labels = (np.array(cur_labels)[cur_pattern_matches]).tolist()
 
             cur_node.matches = cur_strings
                 
@@ -543,7 +597,7 @@ class StringTree:
                 print(f'Best pattern has {len(local_cur_strings)} strings which is less or equal to min_strings_leaf. Processing stopped.')
                 continue
                 
-            if sum(cur_labels) > 0:
+            if sum(cur_labels) > 0 or multiclass:
                 leaves.append(cur_node)
                 if verbose:
                     print('Last pattern was saved')
@@ -635,7 +689,8 @@ class StringTree:
         matches : list[int]
             List containing 1 (match) and 0 (no match) for each string.
         matched_nodes : list[PatternNode]
-            List consisting of PatternNodes of matching strings. Returned only if return_nodes is True.
+            List consisting of PatternNodes of matching strings. If not match found, None is retured. 
+            Returned only if return_nodes is True.
         """
         if self._leaves is None:
             raise ValueError("The StringTree was not built. Run StringTree.build method first.")
@@ -680,3 +735,34 @@ class StringTree:
         else:
             recall_score = 0
         return recall_score
+
+    def predict_label(self, strings, return_nodes=False):
+        """Predict labels for given strings."""
+        if self._leaves is None:
+            raise ValueError("The StringTree was not built. Run StringTree.build method first.")
+
+        matches, matched_nodes = self.match(strings, return_nodes=True)
+        if len(self._classes) > 2:
+            get_label = lambda node: self._classes[np.argmax(node._scores['precision'])] if node is not None else None
+        else:
+            get_label = lambda node: self._classes[int(node._scores['precision'] > 0.5)] if node is not None else None
+        predicted_labels = list(map(get_label, matched_nodes))
+
+        if return_nodes:
+            return predicted_labels, matched_nodes
+        return predicted_labels
+        
+
+    def get_nodes_by_label(self, label):
+        """Get nodes where the label is the most probable."""
+        if self._leaves is None:
+            raise ValueError("The StringTree was not built. Run StringTree.build method first.")
+
+        if len(self._classes) > 2:
+            get_label = lambda node: self._classes[np.argmax(node._scores['precision'])] if node is not None else None
+        else:
+            get_label = lambda node: self._classes[int(node._scores['precision'] > 0.5)] if node is not None else None
+
+        nodes_labels = np.array(list(map(get_label, self._leaves)))
+
+        return np.array(self._leaves)[nodes_labels == label] 
